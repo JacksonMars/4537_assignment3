@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PokemonDetails({pokemon, selectedPokemon}) {
+function PokemonDetails({pokemon, selectedPokemon, setSelectedPokemon}) {
     let selectedTypes = ""
 
     const setTypes = function(types) {
@@ -11,12 +11,20 @@ function PokemonDetails({pokemon, selectedPokemon}) {
         }
     }
 
+    const getId = (id) => {
+        if (id < 10) return `00${id}`
+        if (id < 100) return `0${id}`
+        return id
+    }
+
     return (
         <div>
             {
                 (selectedPokemon != undefined) &&
                 <div>
                     {setTypes(pokemon[selectedPokemon - 1].type)}
+                    <button onClick={() => setSelectedPokemon(null)}>Remove</button>
+                    <img src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${getId(selectedPokemon)}.png`} />
                     <h2>Name: {pokemon[selectedPokemon - 1].name.english}</h2>
                     <p>Pokedex Number: {selectedPokemon}</p>
                     <p>Type: {selectedTypes}</p>

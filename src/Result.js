@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Page from "./Page";
 import Pagination from "./Pagination";
+import PokemonDetails from "./PokemonDetails";
 
 function Result({selectedTypes, currentPage, setCurrentPage}) {
     const [pokemon, setPokemon] = useState([])
@@ -49,9 +50,16 @@ function Result({selectedTypes, currentPage, setCurrentPage}) {
             {
                 setupPageNumbers(newPokemon)
             }
-        
-            <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} setSelectedPokemon={setSelectedPokemon} selectedPokemon={selectedPokemon} pokemon={pokemon} />
-            <Pagination numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
+            <div>
+                <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} setSelectedPokemon={setSelectedPokemon} />
+                <Pagination numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            </div>
+
+            {
+                (selectedPokemon !== null) &&
+                <PokemonDetails pokemon={pokemon} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
+            }
         </div>
     )
 }

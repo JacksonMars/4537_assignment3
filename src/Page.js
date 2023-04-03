@@ -1,7 +1,6 @@
 import React from 'react'
-import PokemonDetails from './PokemonDetails';
 
-function Page({currentPokemon, currentPage, setSelectedPokemon, selectedPokemon, pokemon}) {
+function Page({currentPokemon, currentPage, setSelectedPokemon}) {
     const getId = (id) => {
         if (id < 10) return `00${id}`
         if (id < 100) return `0${id}`
@@ -19,8 +18,6 @@ function Page({currentPokemon, currentPage, setSelectedPokemon, selectedPokemon,
                         </div>
                     ))
                 }
-
-                <PokemonDetails pokemon={pokemon} selectedPokemon={selectedPokemon} />
             </div>
         </div>
     );
