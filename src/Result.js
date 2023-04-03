@@ -7,6 +7,7 @@ import Pagination from "./Pagination";
 function Result({selectedTypes, currentPage, setCurrentPage}) {
     const [pokemon, setPokemon] = useState([])
     const [pokemonPerPage] = useState(10)
+    const [selectedPokemon, setSelectedPokemon] = useState(null)
 
     useEffect(() => {
         async function fetchData() {
@@ -22,6 +23,13 @@ function Result({selectedTypes, currentPage, setCurrentPage}) {
     let numberOfPages = Math.ceil(pokemon.length / pokemonPerPage);
     let newPokemon = []
 
+    const setupPageNumbers = function(newPokemon) {
+        lastIndex = currentPage * pokemonPerPage
+        firstIndex = lastIndex - pokemonPerPage;
+        numberOfPages = Math.ceil(newPokemon.length / pokemonPerPage);
+        allCurrentPokemon = newPokemon.slice(firstIndex, lastIndex)
+    }
+
     return (
         <div>
             {
@@ -33,45 +41,18 @@ function Result({selectedTypes, currentPage, setCurrentPage}) {
                         numberOfPages = 0
                         return
                     } else if(selectedTypes.every(type => poke.type.includes(type))) {
-                        // <>
-                        //     {poke.name.english}
-                        //     <br />
-                        // </>
                         newPokemon.push(poke)
                     }
                 })
             }
 
             {
-                newPokemon.map(poke => {
-                    lastIndex = currentPage * pokemonPerPage;
-                    firstIndex = lastIndex - pokemonPerPage;
-                    allCurrentPokemon = newPokemon.slice(firstIndex, lastIndex)
-                    numberOfPages = Math.ceil(newPokemon.length / pokemonPerPage);
-                })
+                setupPageNumbers(newPokemon)
             }
         
-            <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} />
+            <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} setSelectedPokemon={setSelectedPokemon} selectedPokemon={selectedPokemon} pokemon={pokemon} />
             <Pagination numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </div>
-        // <div>
-        //     {
-        //         pokemon.map(poke => {
-        //             if(selectedTypes.length === 0) {
-        //                 return(
-        //                     <></>
-        //                 )
-        //             } else if(selectedTypes.every(type => poke.type.includes(type))) {
-        //                 return(
-        //                     <>
-        //                         {poke.name.english}
-        //                         <br />
-        //                     </>
-        //                 )
-        //             }
-        //         })
-        //     }
-        // </div>
     )
 }
 
