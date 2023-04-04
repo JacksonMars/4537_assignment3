@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PokemonDetails({pokemon, selectedPokemon, setSelectedPokemon}) {
+function PokemonDetails({pokemon, selectedPokemon, setSelectedPokemon, currentImage, currentDetails}) {
     let selectedTypes = ""
 
     const setTypes = function(types) {
@@ -11,29 +11,23 @@ function PokemonDetails({pokemon, selectedPokemon, setSelectedPokemon}) {
         }
     }
 
-    const getId = (id) => {
-        if (id < 10) return `00${id}`
-        if (id < 100) return `0${id}`
-        return id
-    }
-
     return (
         <div>
             {
-                (selectedPokemon != undefined) &&
+                (selectedPokemon != undefined && currentDetails != null) &&
                 <div>
-                    {setTypes(pokemon[selectedPokemon - 1].type)}
+                    {setTypes(currentDetails.type)}
                     <button onClick={() => setSelectedPokemon(null)}>Remove</button>
-                    <img src={`https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/images/${getId(selectedPokemon)}.png`} />
-                    <h2>Name: {pokemon[selectedPokemon - 1].name.english}</h2>
+                    <img src={currentImage} />
+                    <h2>Name: {currentDetails.name.english}</h2>
                     <p>Pokedex Number: {selectedPokemon}</p>
                     <p>Type: {selectedTypes}</p>
-                    <p>HP: {pokemon[selectedPokemon - 1].base.HP}</p>
-                    <p>Attack: {pokemon[selectedPokemon - 1].base.Attack}</p>
-                    <p>Defense: {pokemon[selectedPokemon - 1].base.Defense}</p>
-                    <p>Special Attack: {pokemon[selectedPokemon - 1].base['Sp. Attack']}</p>
-                    <p>Special Defense: {pokemon[selectedPokemon - 1].base['Sp. Defense']}</p>
-                    <p>Speed: {pokemon[selectedPokemon - 1].base.Speed}</p>
+                    <p>HP: {currentDetails.base.HP}</p>
+                    <p>Attack: {currentDetails.base.Attack}</p>
+                    <p>Defense: {currentDetails.base.Defense}</p>
+                    <p>Special Attack: {currentDetails.base['Speed Attack']}</p>
+                    <p>Special Defense: {currentDetails.base['Speed Defense']}</p>
+                    <p>Speed: {currentDetails.base.Speed}</p>
                 </div>
             }
         </div>

@@ -3,12 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard"
 
-function Login() {
+function Login({user, setUser}) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [refreshToken, setRefreshToken] = useState("");
     const [accessToken, setAccessToken] = useState("");
-    const [user, setUser] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

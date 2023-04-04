@@ -9,10 +9,12 @@ function Result({selectedTypes, currentPage, setCurrentPage}) {
     const [pokemon, setPokemon] = useState([])
     const [pokemonPerPage] = useState(10)
     const [selectedPokemon, setSelectedPokemon] = useState(null)
+    const [currentImage, setCurrentImage] = useState("")
+    const [currentDetails, setCurrentDetails] = useState(null)
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get("https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json")
+            const response = await axios.get("http://localhost:3000/api/v1/pokemons")
             setPokemon(response.data)
         }
         fetchData()
@@ -52,13 +54,13 @@ function Result({selectedTypes, currentPage, setCurrentPage}) {
             }
 
             <div>
-                <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} setSelectedPokemon={setSelectedPokemon} />
+                <Page currentPokemon={allCurrentPokemon} currentPage={currentPage} setSelectedPokemon={setSelectedPokemon} setCurrentImage={setCurrentImage} setCurrentDetails={setCurrentDetails} />
                 <Pagination numberOfPages={numberOfPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
 
             {
                 (selectedPokemon !== null) &&
-                <PokemonDetails pokemon={pokemon} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
+                <PokemonDetails pokemon={pokemon} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} currentImage={currentImage} currentDetails={currentDetails} />
             }
         </div>
     )
